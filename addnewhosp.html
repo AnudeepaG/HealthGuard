@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Hospital Management</title>
+  <style>
+    .button {
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div> 
+    <h1 align="center"> Add new Hospital </h1>
+    <table border="1">
+      <tr>
+        <td>Hospital Name</td>
+        <td><input type="text" id="hospitalName" placeholder="hospital name"></td>
+      </tr>
+      <tr>
+        <td>Diseases Name</td>
+        <td><input type="text" id="diseasesName" placeholder="diseases name"></td>
+      </tr>
+      <tr>
+        <td>Treatment Cost</td>
+        <td><input type="number" id="treatmentCost" placeholder="treatment amount"></td>
+      </tr>
+    </table>
+    <br>
+    <button class="button" onclick="addItem();">Add</button> 
+  </div>
+  <hr>
+  <br>
+  <div>
+    <table border="2" align="center" id="hospitalTable">
+      <tr>
+        <th>S.No</th>
+        <th>Hospital Name</th>
+        <th>Diseases Name</th>
+        <th>Treatment Amount</th>
+        <th>Remove</th>
+      </tr>
+    </table>
+    <hr> 
+  </div>
+
+  <script>
+    let hospitals = [];
+
+    function addItem() {
+      const hospitalName = document.getElementById('hospitalName').value;
+      const diseasesName = document.getElementById('diseasesName').value;
+      const treatmentCost = document.getElementById('treatmentCost').value;
+
+      if (hospitalName && diseasesName && treatmentCost) {
+        const newItem = {
+          name: hospitalName,
+          dname: diseasesName,
+          t_cost: treatmentCost
+        };
+
+        hospitals.push(newItem);
+        displayItems();
+        clearInputs();
+      } else {
+        alert('Please fill in all fields.');
+      }
+    }
+
+    function displayItems() {
+      const tableBody = document.getElementById('hospitalTable');
+      tableBody.innerHTML = "<tr><th>S.No</th><th>Hospital Name</th><th>Diseases Name</th><th>Treatment Amount</th><th>Remove</th></tr>";
+
+      hospitals.forEach((item, index) => {
+        const row = `<tr>
+                        <td>${index + 1}</td>
+                        <td>${item.name}</td>
+                        <td>${item.dname}</td>
+                        <td>${item.t_cost}</td>
+                        <td><button onclick="removeItem(${index});">Remove Item</button></td>
+                    </tr>`;
+        tableBody.innerHTML += row;
+      });
+    }
+
+    function removeItem(index) {
+      hospitals.splice(index, 1);
+      displayItems();
+    }
+
+    function clearInputs() {
+      document.getElementById('hospitalName').value = '';
+      document.getElementById('diseasesName').value = '';
+      document.getElementById('treatmentCost').value = '';
+    }
+  </script>
+</body>
+</html>
