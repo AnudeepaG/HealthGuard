@@ -1,0 +1,45 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to bottom right, #dcd0ff, #f9dfff); /* Gradient background */
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 30px; /* Increased container padding */
+    background-color: #f5e1ff; /* Light lilac color */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2 {
+    text-align: center;
+    color: #6a0dad;
+}
+
+.analysis-section {
+    margin-bottom: 30px; /* Increased margin-bottom */
+}
+
+.analysis-section button {
+    display: block;
+    width: 50%;
+    margin: 15px auto 0;
+    padding: 12px;
+    border: 2px solid #9370db; /* Added button border */
+    border-radius: 5px;
+    background-color: #c8a2c8; /* Lighter lilac color */
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.3s;
+}
+
+.analysis-section button:hover {
+    background-color: #9370db; /* Button color on hover */
+    transform: scale(1.05); /* Scale effect on hover */
+    color: #fff;
+}
