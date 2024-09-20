@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hospital Management</title>
+  <!-- Bootstrap CSS for improved layout and responsiveness -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #E3F2FD;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    h1 {
+      margin-top: 20px;
+      color: #00796B;
+      text-align: center;
+    }
+
+    .form-container {
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #FFFFFF;
+      border-radius: 10px;
+      box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .button {
+      background-color: #009688;
+      border: none;
+      color: white;
+      padding: 12px;
+      font-size: 18px;
+      cursor: pointer;
+      border-radius: 5px;
+      width: 100%;
+      margin-top: 15px;
+      transition: background-color 0.3s ease;
+    }
+
+    .button:hover {
+      background-color: #00796B;
+    }
+
+    .table-container {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: #FFFFFF;
+      border-radius: 10px;
+      box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.1);
+    }
+
+    table {
+      width: 100%;
+      margin-top: 20px;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid #ddd;
+      text-align: center;
+    }
+
+    th {
+      background-color: #00796B;
+      color: white;
+      font-weight: bold;
+    }
+
+    tr:hover {
+      background-color: #F1F8E9;
+    }
+
+    .remove-button {
+      background-color: #D32F2F;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .remove-button:hover {
+      background-color: #C62828;
+    }
+
+    @media only screen and (max-width: 768px) {
+      .form-container, .table-container {
+        padding: 10px;
+      }
+
+      .button {
+        font-size: 16px;
+      }
+    }
+
+    /* Additional dynamic hover effects */
+    .button:hover, .remove-button:hover {
+      transform: scale(1.05);
+    }
+
+    table th, table td {
+      transition: background-color 0.3s ease;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-container">
+    <h1>Add New Hospital</h1>
+    <div class="form-group">
+      <input type="text" id="hospitalName" class="form-control" placeholder="Hospital Name">
+    </div>
+    <div class="form-group">
+      <input type="text" id="diseasesName" class="form-control" placeholder="Diseases Name">
+    </div>
+    <div class="form-group">
+      <input type="number" id="treatmentCost" class="form-control" placeholder="Treatment Amount">
+    </div>
+    <button class="button" onclick="addItem();">Add Hospital</button>
+  </div>
+
+  <div class="table-container">
+    <table class="table table-striped" id="hospitalTable">
+      <thead>
+        <tr>
+          <th>S.No</th>
+          <th>Hospital Name</th>
+          <th>Diseases Name</th>
+          <th>Treatment Amount</th>
+          <th>Remove</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Dynamically populated rows -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    // Retrieve hospitals from localStorage or initialize an empty array
+    let hospitals = JSON.parse(localStorage.getItem('hospitals')) || [];
+
+    // Function to display items on page load or after adding/removing an item
+    function displayItems() {
+      const tableBody = document.querySelector('#hospitalTable tbody');
+      tableBody.innerHTML = "";  // Clear the table body
+
+      hospitals.forEach((item, index) => {
+        const row = `<tr>
+                        <td>${index + 1}</td>
+                        <td>${item.name}</td>
+                        <td>${item.dname}</td>
+                        <td>${item.t_cost}</td>
+                        <td><button class="remove-button" onclick="removeItem(${index});">Remove</button></td>
+                    </tr>`;
+        tableBody.innerHTML += row;
+      });
+
+      // Save the updated hospitals array to localStorage
+      localStorage.setItem('hospitals', JSON.stringify(hospitals));
+    }
+
+    // Function to add a new hospital to the array and localStorage
+    function addItem() {
+      const hospitalName = document.getElementById('hospitalName').value;
+      const diseasesName = document.getElementById('diseasesName').value;
+      const treatmentCost = document.getElementById('treatmentCost').value;
+
+      if (hospitalName && diseasesName && treatmentCost) {
+        const newItem = {
+          name: hospitalName,
+          dname: diseasesName,
+          t_cost: treatmentCost
+        };
+
+        hospitals.push(newItem);
+        displayItems();  // Update the table
+        clearInputs();   // Clear input fields
+      } else {
+        alert('Please fill in all fields.');
+      }
+    }
+
+    // Function to remove an item from the array and update localStorage
+    function removeItem(index) {
+      hospitals.splice(index, 1);  // Remove the selected hospital
+      displayItems();  // Update the table
+    }
+
+    // Function to clear input fields after adding a new hospital
+    function clearInputs() {
+      document.getElementById('hospitalName').value = '';
+      document.getElementById('diseasesName').value = '';
+      document.getElementById('treatmentCost').value = '';
+    }
+
+    // Display stored hospitals when the page is loaded
+    window.onload = displayItems;
+  </script>
+
+  <!-- Bootstrap JS and dependencies for responsive and dynamic elements -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
