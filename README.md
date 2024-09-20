@@ -1,5 +1,7 @@
 <p align="center"><i>Experience the live prediction and hospital recommendation tool in action.</i></p>
-<a href="https://anudeepag.github.io/Disesases-Prediction-System/">
+<p align="center">
+  <a href="https://anudeepag.github.io/Disesases-Prediction-System/" target="_blank" style="text-decoration: none; color: #4CAF50; font-weight: bold;">Try the Live Demo</a>
+</p>
   
 <h1 align="center">HealthGuard: Predictive Disease Diagnosis and Hospital Recommender System</h1>
 
